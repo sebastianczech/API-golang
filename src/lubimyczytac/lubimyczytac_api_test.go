@@ -9,5 +9,5 @@ func TestSzukajLubimyCzytacDlaKonkretnegoTytułu(t *testing.T) {
 }
 
 func TestSzukajLubimyCzytacDlaFragmentuTytułu(t *testing.T) {
-	SzukajLubimyCzytac("http://lubimyczytac.pl/szukaj/ksiazki?phrase=cz%C5%82owiek&main_search=1")
+	SzukajLubimyCzytac("http://lubimyczytac.pl/szukaj/ksiazki?phrase=cz%C5%82owiek+niet&main_search=1")
 }
