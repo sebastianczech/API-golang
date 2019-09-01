@@ -1,4 +1,4 @@
-package main
+package lubimyczytac
 
 import (
 	"fmt"
@@ -7,7 +7,8 @@ import (
 	"github.com/gocolly/colly"
 )
 
-func main() {
+// SzukajLubimyCzytac API dla lubimyczytac.pl do wyszukiwania ksiazek
+func SzukajLubimyCzytac(url string) {
 	c := colly.NewCollector(
 		colly.AllowedDomains("lubimyczytac.pl"),
 	)
@@ -27,6 +28,5 @@ func main() {
 		fmt.Println("Visiting", r.URL.String())
 	})
 
-	c.Visit("http://lubimyczytac.pl/szukaj/ksiazki?phrase=cz%C5%82owiek+nietoperz&main_search=1")
-	// c.Visit("http://lubimyczytac.pl/szukaj/ksiazki?phrase=cz%C5%82owiek&main_search=1")
+	c.Visit(url)
 }
