@@ -8,23 +8,23 @@ import (
 )
 
 type lubimyCzytacBook struct {
-	author string
-	title  string
-	image  string
-	book   string
+	Author string `json:"Author"`
+	Title  string `json:"Title"`
+	Image  string `json:"Image"`
+	Book   string `json:"Book"`
 }
 
 func newLubimyCzytacBook() *lubimyCzytacBook {
 	return &lubimyCzytacBook{
-		author: "",
-		title:  "",
-		image:  "",
-		book:   "",
+		Author: "",
+		Title:  "",
+		Image:  "",
+		Book:   "",
 	}
 }
 
 func (book lubimyCzytacBook) String() string {
-	return fmt.Sprintf("author: %s title: %s image: %s book: %s", book.author, book.title, book.image, book.book)
+	return fmt.Sprintf("author: %s title: %s image: %s book: %s", book.Author, book.Title, book.Image, book.Book)
 }
 
 // SzukajLubimyCzytac API dla lubimyczytac.pl do wyszukiwania ksiazek
@@ -41,8 +41,8 @@ func SzukajLubimyCzytac(url string) []*lubimyCzytacBook {
 			fmt.Printf("Book link found: %q -> %s\n", e.Text, link)
 
 			book := newLubimyCzytacBook()
-			book.title = e.Text
-			book.book = link
+			book.Title = e.Text
+			book.Book = link
 			// fmt.Printf("Struct: %s\n", book)
 			books = append(books, book)
 
@@ -53,8 +53,8 @@ func SzukajLubimyCzytac(url string) []*lubimyCzytacBook {
 
 			for _, book := range books {
 				// fmt.Printf("Check %s with book %s\n", e.Request.URL.String(), book)
-				if book.book == e.Request.URL.String() {
-					book.author = e.Text
+				if book.Book == e.Request.URL.String() {
+					book.Author = e.Text
 					// fmt.Printf("Struct: %s\n", book)
 				}
 			}
@@ -65,9 +65,9 @@ func SzukajLubimyCzytac(url string) []*lubimyCzytacBook {
 		itemprop := e.Attr("itemprop")
 		if itemprop == "image" {
 			for _, book := range books {
-				if book.book == e.Request.URL.String() {
-					fmt.Printf("Image link found: %q -> %s\n", book.title, e.Attr("src"))
-					book.image = e.Attr("src")
+				if book.Book == e.Request.URL.String() {
+					fmt.Printf("Image link found: %q -> %s\n", book.Title, e.Attr("src"))
+					book.Image = e.Attr("src")
 				}
 			}
 		}
