@@ -24,7 +24,7 @@ func newLubimyCzytacBook() *lubimyCzytacBook {
 }
 
 func (book lubimyCzytacBook) String() string {
-	return fmt.Sprintf("author: %s, title: %s, image: %s, book: %s", book.author, book.title, book.image, book.book)
+	return fmt.Sprintf("author: %s title: %s image: %s book: %s", book.author, book.title, book.image, book.book)
 }
 
 // SzukajLubimyCzytac API dla lubimyczytac.pl do wyszukiwania ksiazek
@@ -56,6 +56,18 @@ func SzukajLubimyCzytac(url string) []*lubimyCzytacBook {
 				if book.book == e.Request.URL.String() {
 					book.author = e.Text
 					// fmt.Printf("Struct: %s\n", book)
+				}
+			}
+		}
+	})
+
+	c.OnHTML("img[itemprop]", func(e *colly.HTMLElement) {
+		itemprop := e.Attr("itemprop")
+		if itemprop == "image" {
+			for _, book := range books {
+				if book.book == e.Request.URL.String() {
+					fmt.Printf("Image link found: %q -> %s\n", book.title, e.Attr("src"))
+					book.image = e.Attr("src")
 				}
 			}
 		}
