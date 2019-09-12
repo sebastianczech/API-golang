@@ -8,11 +8,12 @@ import (
 
 	"./lubimyczytac"
 
-	"github.com/gorilla/mux"
+	"github.com/julienschmidt/httprouter"
 )
 
-func searchBook(w http.ResponseWriter, r *http.Request) {
-	find := mux.Vars(r)["find"]
+func searchBook(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
+	queryValues := r.URL.Query()
+	find := queryValues.Get("find")
 	url := fmt.Sprintf("http://lubimyczytac.pl/szukaj/ksiazki?phrase=%s&main_search=1", find)
 	books := lubimyczytac.SzukajLubimyCzytac(url)
 	fmt.Printf("API /books/%s: %s\n", find, books)
@@ -21,14 +22,14 @@ func searchBook(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(books)
 }
 
-func homeLink(w http.ResponseWriter, r *http.Request) {
+func homeLink(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	w.Header().Set("Content-Type", "application/json")
 	fmt.Fprintf(w, "API-golang")
 }
 
 func main() {
-	router := mux.NewRouter().StrictSlash(true)
-	router.HandleFunc("/", homeLink)
-	router.HandleFunc("/books/{find}", searchBook).Methods("GET")
+	router := httprouter.New()
+	router.GET("/", homeLink)
+	router.GET("/books", searchBook)
 	log.Fatal(http.ListenAndServe(":8080", router))
 }
