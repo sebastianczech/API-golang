@@ -27,5 +27,9 @@ jobs:
     - name: Build application
       run: go build -v .
 
-    - name: Test with code coverage
-      run: cd lubimyczytac && go test -cover
+    - name: Test library with code coverage
+      run: cd lubimyczytac && go test -v -cover
+
+    - name: Test API with code coverage
+      run: go test -v -cover
+      
