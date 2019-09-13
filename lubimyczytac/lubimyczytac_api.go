@@ -7,15 +7,16 @@ import (
 	"github.com/gocolly/colly"
 )
 
-type lubimyCzytacBook struct {
+// LubimyCzytacBook struktura danych do wykorzystania przez API
+type LubimyCzytacBook struct {
 	Author string `json:"Author"`
 	Title  string `json:"Title"`
 	Image  string `json:"Image"`
 	Book   string `json:"Book"`
 }
 
-func newLubimyCzytacBook() *lubimyCzytacBook {
-	return &lubimyCzytacBook{
+func newLubimyCzytacBook() *LubimyCzytacBook {
+	return &LubimyCzytacBook{
 		Author: "",
 		Title:  "",
 		Image:  "",
@@ -23,13 +24,13 @@ func newLubimyCzytacBook() *lubimyCzytacBook {
 	}
 }
 
-func (book lubimyCzytacBook) String() string {
+func (book LubimyCzytacBook) String() string {
 	return fmt.Sprintf("author: %s title: %s image: %s book: %s", book.Author, book.Title, book.Image, book.Book)
 }
 
 // SzukajLubimyCzytac API dla lubimyczytac.pl do wyszukiwania ksiazek
-func SzukajLubimyCzytac(url string) []*lubimyCzytacBook {
-	books := []*lubimyCzytacBook{}
+func SzukajLubimyCzytac(url string) []*LubimyCzytacBook {
+	books := []*LubimyCzytacBook{}
 
 	c := colly.NewCollector(
 		colly.AllowedDomains("lubimyczytac.pl"),

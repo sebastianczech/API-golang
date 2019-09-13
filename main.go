@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"net/url"
 
 	"./lubimyczytac"
 
@@ -14,7 +15,21 @@ import (
 func searchBook(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	queryValues := r.URL.Query()
 	find := queryValues.Get("find")
-	url := fmt.Sprintf("http://lubimyczytac.pl/szukaj/ksiazki?phrase=%s&main_search=1", find)
+
+	// url := fmt.Sprintf("http://lubimyczytac.pl/szukaj/ksiazki?phrase=%s&main_search=1", find)
+	baseUrl, err := url.Parse("http://lubimyczytac.pl")
+	if err != nil {
+		fmt.Printf("Error URL: %s", err.Error())
+		return
+	}
+	baseUrl.Path += "szukaj/ksiazki"
+	params := url.Values{}
+	params.Add("phrase", find)
+	params.Add("main_search", "1")
+	baseUrl.RawQuery = params.Encode()
+	url := baseUrl.String()
+	fmt.Printf("Encoded URL is %q\n", url)
+
 	books := lubimyczytac.SzukajLubimyCzytac(url)
 	fmt.Printf("API /books/%s: %s\n", find, books)
 
