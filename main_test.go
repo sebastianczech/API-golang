@@ -13,7 +13,7 @@ func TestSearchBook(t *testing.T) {
 	router := httprouter.New()
 	router.GET("/books", searchBook)
 
-	req, _ := http.NewRequest("GET", "/books?find=człowiek+nieto", nil)
+	req, _ := http.NewRequest("GET", "/books?find=człowiek nietoperz", nil)
 	rep := httptest.NewRecorder()
 
 	router.ServeHTTP(rep, req)
