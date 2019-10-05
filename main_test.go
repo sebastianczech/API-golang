@@ -64,7 +64,7 @@ func TestSearchBookWithWrongUrl(t *testing.T) {
 
 	data := []*lubimyczytac.LubimyCzytacBook{}
 	json.Unmarshal([]byte(body), &data)
-	fmt.Printf("Books: %s", data)
+	fmt.Printf("Books: %s\n", data)
 
 	if len(data) > 0 {
 		t.Error("Not found any book")
@@ -90,4 +90,27 @@ func TestHomeLink(t *testing.T) {
 	if status := rep.Code; status != http.StatusOK {
 		t.Errorf("Wrong status")
 	}
+}
+
+func TestMetricsLink(t *testing.T) {
+	router := httprouter.New()
+	router.GET("/metrics", metricsLink)
+
+	req, _ := http.NewRequest("GET", "/metrics", nil)
+	rep := httptest.NewRecorder()
+
+	router.ServeHTTP(rep, req)
+
+	resp := rep.Result()
+	body, _ := ioutil.ReadAll(resp.Body)
+
+	t.Log(resp.StatusCode)
+	t.Log(resp.Header.Get("Content-Type"))
+	t.Log(string(body))
+
+	if status := rep.Code; status != http.StatusOK {
+		t.Errorf("Wrong status")
+	}
+
+	fmt.Printf("Metrics: %s\n", string(body))
 }

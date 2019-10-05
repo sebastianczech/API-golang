@@ -6,6 +6,7 @@ import (
 	"log"
 	"net/http"
 	"net/url"
+	"runtime"
 
 	"./lubimyczytac"
 
@@ -37,6 +38,14 @@ func searchBook(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	json.NewEncoder(w).Encode(books)
 }
 
+func metricsLink(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
+	w.Header().Set("Content-Type", "application/json")
+	var mem runtime.MemStats
+	runtime.ReadMemStats(&mem)
+	b, _ := json.Marshal(mem)
+	fmt.Fprintf(w, string(b))
+}
+
 func homeLink(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	w.Header().Set("Content-Type", "application/json")
 	fmt.Fprintf(w, "API-golang")
@@ -45,6 +54,7 @@ func homeLink(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 func main() {
 	router := httprouter.New()
 	router.GET("/", homeLink)
+	router.GET("/metrics", metricsLink)
 	router.GET("/books", searchBook)
 	log.Fatal(http.ListenAndServe(":8080", router))
 }
