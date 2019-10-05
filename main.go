@@ -8,6 +8,7 @@ import (
 	"net/url"
 	"runtime"
 
+	"./info"
 	"./lubimyczytac"
 
 	"github.com/julienschmidt/httprouter"
@@ -48,7 +49,11 @@ func metricsLink(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 
 func homeLink(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	w.Header().Set("Content-Type", "application/json")
-	fmt.Fprintf(w, "API-golang")
+	infoApi := info.NewInfoApi()
+	infoApi.Name = "API-golang"
+	infoApi.Version = "1.0.0"
+	b, _ := json.Marshal(infoApi)
+	fmt.Fprintf(w, string(b))
 }
 
 func main() {

@@ -90,6 +90,8 @@ func TestHomeLink(t *testing.T) {
 	if status := rep.Code; status != http.StatusOK {
 		t.Errorf("Wrong status")
 	}
+
+	fmt.Printf("Info: %s\n", string(body))
 }
 
 func TestMetricsLink(t *testing.T) {
