@@ -32,7 +32,7 @@ func FindImdbFilm(url string) []*IdmbFilm {
 	films := []*IdmbFilm{}
 
 	c := colly.NewCollector(
-		colly.AllowedDomains("imdb.com"),
+		colly.AllowedDomains("www.imdb.com"),
 	)
 
 	// ...
