@@ -40,6 +40,19 @@ func TestSearchBook(t *testing.T) {
 	if len(data) < 1 {
 		t.Error("Not found any book")
 	}
+
+	if len(data[0].Title) == 0 {
+		t.Error("Empty title")
+	}
+	if len(data[0].Author) == 0 {
+		t.Error("Empty author")
+	}
+	if len(data[0].Image) == 0 {
+		t.Error("Empty image URL")
+	}
+	if len(data[0].Book) == 0 {
+		t.Error("Empty book URL")
+	}
 }
 
 func TestSearchBookWithWrongUrl(t *testing.T) {

@@ -3,6 +3,7 @@ package lubimyczytac
 import (
 	"fmt"
 	"strings"
+	"unicode"
 
 	"github.com/gocolly/colly"
 )
@@ -38,33 +39,37 @@ func SzukajLubimyCzytac(url string) []*LubimyCzytacBook {
 
 	c.OnHTML("a[href]", func(e *colly.HTMLElement) {
 		link := e.Attr("href")
-		if strings.Contains(e.Request.URL.String(), "/szukaj/") && len(e.Text) > 0 && strings.Contains(link, "ksiazka") && !strings.Contains(e.Text, "Dodaj książkę") && !strings.Contains(e.Text, "Kup książkę") {
+		if strings.Contains(e.Request.URL.String(), "/szukaj/") && len(e.Text) > 0 && strings.Contains(link, "ksiazka") && !strings.Contains(e.Text, "Dodaj książkę") && !strings.Contains(e.Text, "Kup książkę") && !strings.Contains(e.Text, "Sprawdź cenę") {
 			fmt.Printf("Book link found: %q -> %s\n", e.Text, link)
 
 			book := newLubimyCzytacBook()
-			book.Title = e.Text
-			book.Book = link
+			book.Title = strings.TrimFunc(e.Text, func(r rune) bool {
+				return !unicode.IsLetter(r) && !unicode.IsNumber(r)
+			})
+			book.Book = e.Request.AbsoluteURL(link)
 			// fmt.Printf("Struct: %s\n", book)
 			books = append(books, book)
 
 			c.Visit(e.Request.AbsoluteURL(link))
 		}
-		if strings.Contains(e.Request.URL.String(), "/ksiazka/") && len(e.Text) > 0 && strings.Contains(link, "autor") && strings.Contains(e.Attr("itemprop"), "name") {
+		if strings.Contains(e.Request.URL.String(), "/ksiazka/") && len(e.Text) > 0 && strings.Contains(link, "autor") && strings.Contains(e.Attr("class"), "link-name") {
 			fmt.Printf("Author link found: %q -> %s\n", e.Text, link)
 
 			for _, book := range books {
 				// fmt.Printf("Check %s with book %s\n", e.Request.URL.String(), book)
 				if book.Book == e.Request.URL.String() {
-					book.Author = e.Text
+					book.Author = strings.TrimFunc(e.Text, func(r rune) bool {
+						return !unicode.IsLetter(r) && !unicode.IsNumber(r)
+					})
 					// fmt.Printf("Struct: %s\n", book)
 				}
 			}
 		}
 	})
 
-	c.OnHTML("img[itemprop]", func(e *colly.HTMLElement) {
-		itemprop := e.Attr("itemprop")
-		if itemprop == "image" {
+	c.OnHTML("img[class]", func(e *colly.HTMLElement) {
+		itemprop := e.Attr("class")
+		if itemprop == "img-fluid book-cover d-lg-none" {
 			for _, book := range books {
 				if book.Book == e.Request.URL.String() {
 					fmt.Printf("Image link found: %q -> %s\n", book.Title, e.Attr("src"))
