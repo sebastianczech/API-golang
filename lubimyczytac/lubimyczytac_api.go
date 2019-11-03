@@ -67,9 +67,9 @@ func SzukajLubimyCzytac(url string) []*LubimyCzytacBook {
 		}
 	})
 
-	c.OnHTML("img[itemprop]", func(e *colly.HTMLElement) {
-		itemprop := e.Attr("itemprop")
-		if itemprop == "image" {
+	c.OnHTML("img[class]", func(e *colly.HTMLElement) {
+		itemprop := e.Attr("class")
+		if itemprop == "img-fluid book-cover d-lg-none" {
 			for _, book := range books {
 				if book.Book == e.Request.URL.String() {
 					fmt.Printf("Image link found: %q -> %s\n", book.Title, e.Attr("src"))
