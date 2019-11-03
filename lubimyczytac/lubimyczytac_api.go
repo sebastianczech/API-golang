@@ -46,13 +46,13 @@ func SzukajLubimyCzytac(url string) []*LubimyCzytacBook {
 			book.Title = strings.TrimFunc(e.Text, func(r rune) bool {
 				return !unicode.IsLetter(r) && !unicode.IsNumber(r)
 			})
-			book.Book = link
+			book.Book = e.Request.AbsoluteURL(link)
 			// fmt.Printf("Struct: %s\n", book)
 			books = append(books, book)
 
 			c.Visit(e.Request.AbsoluteURL(link))
 		}
-		if strings.Contains(e.Request.URL.String(), "/ksiazka/") && len(e.Text) > 0 && strings.Contains(link, "autor") && strings.Contains(e.Attr("itemprop"), "name") {
+		if strings.Contains(e.Request.URL.String(), "/ksiazka/") && len(e.Text) > 0 && strings.Contains(link, "autor") && strings.Contains(e.Attr("class"), "link-name") {
 			fmt.Printf("Author link found: %q -> %s\n", e.Text, link)
 
 			for _, book := range books {
