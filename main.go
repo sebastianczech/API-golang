@@ -8,11 +8,35 @@ import (
 	"net/url"
 	"runtime"
 
+	"./imdb"
 	"./info"
 	"./lubimyczytac"
 
 	"github.com/julienschmidt/httprouter"
 )
+
+func searchFilm(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
+	queryValues := r.URL.Query()
+	find := queryValues.Get("find")
+
+	baseUrl, err := url.Parse("https://www.imdb.com")
+	if err != nil {
+		fmt.Printf("Error URL: %s", err.Error())
+		return
+	}
+	baseUrl.Path += "find"
+	params := url.Values{}
+	params.Add("q", find)
+	baseUrl.RawQuery = params.Encode()
+	url := baseUrl.String()
+	fmt.Printf("Encoded URL is %q\n", url)
+
+	films := imdb.FindImdbFilm(url)
+	fmt.Printf("API /films/%s: %s\n", find, films)
+
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(films)
+}
 
 func searchBook(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	queryValues := r.URL.Query()
@@ -61,5 +85,6 @@ func main() {
 	router.GET("/", homeLink)
 	router.GET("/metrics", metricsLink)
 	router.GET("/books", searchBook)
+	router.GET("/films", searchFilm)
 	log.Fatal(http.ListenAndServe(":8080", router))
 }
