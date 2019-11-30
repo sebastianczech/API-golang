@@ -2,8 +2,6 @@ package imdb
 
 import (
 	"fmt"
-	"strings"
-	"unicode"
 
 	"github.com/gocolly/colly"
 )
@@ -45,26 +43,27 @@ func FindImdbFilm(url string) []*IdmbFilm {
 
 			film := newIdmbFilm()
 			film.Film = e.Request.AbsoluteURL(link)
+			film.Title = e.ChildText("a[href]")
 			films = append(films, film)
 
 			c.Visit(e.Request.AbsoluteURL(link))
 		}
 	})
 
-	c.OnHTML("h1[class]", func(e *colly.HTMLElement) {
-		itemprop := e.Attr("class")
-		if itemprop == "long" {
-			fmt.Printf("Title found: %s\n", e.Text)
+	// c.OnHTML("h1[class]", func(e *colly.HTMLElement) {
+	// 	itemprop := e.Attr("class")
+	// 	if itemprop == "long" {
+	// 		fmt.Printf("Title found: %s\n", e.Text)
 
-			for _, film := range films {
-				if film.Film == e.Request.URL.String() {
-					film.Title = strings.TrimFunc(e.Text, func(r rune) bool {
-						return !unicode.IsLetter(r) && !unicode.IsNumber(r)
-					})
-				}
-			}
-		}
-	})
+	// 		for _, film := range films {
+	// 			if film.Film == e.Request.URL.String() {
+	// 				film.Title = strings.TrimFunc(e.Text, func(r rune) bool {
+	// 					return !unicode.IsLetter(r) && !unicode.IsNumber(r)
+	// 				})
+	// 			}
+	// 		}
+	// 	}
+	// })
 
 	c.OnHTML("div[class]", func(e *colly.HTMLElement) {
 		itemprop := e.Attr("class")
