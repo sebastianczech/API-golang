@@ -6,7 +6,7 @@ import (
 
 func TestSzukajLubimyCzytacDlaKonkretnegoTytułu(t *testing.T) {
 	books := SzukajLubimyCzytac("http://lubimyczytac.pl/szukaj/ksiazki?phrase=cz%C5%82owiek+nietoperz&main_search=1")
-	if len(books) <= 1 {
+	if len(books) < 1 {
 		t.Errorf("found %d books; wanted at least 1", len(books))
 	}
 
