@@ -18,7 +18,7 @@ func TestSearchFilm(t *testing.T) {
 	router := httprouter.New()
 	router.GET("/films", searchFilm)
 
-	req, _ := http.NewRequest("GET", "/films?find=millenium", nil)
+	req, _ := http.NewRequest("GET", "/films?find=millenium:%20m%C4%99%C5%BCczyzni", nil)
 	rep := httptest.NewRecorder()
 
 	router.ServeHTTP(rep, req)
