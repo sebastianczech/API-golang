@@ -8,10 +8,50 @@ import (
 	"net/http/httptest"
 	"testing"
 
+	"./imdb"
 	"./lubimyczytac"
 
 	"github.com/julienschmidt/httprouter"
 )
+
+func TestSearchFilm(t *testing.T) {
+	router := httprouter.New()
+	router.GET("/films", searchFilm)
+
+	req, _ := http.NewRequest("GET", "/films?find=millenium:%20m%C4%99%C5%BCczyzni", nil)
+	rep := httptest.NewRecorder()
+
+	router.ServeHTTP(rep, req)
+
+	resp := rep.Result()
+	body, _ := ioutil.ReadAll(resp.Body)
+
+	t.Log(resp.StatusCode)
+	t.Log(resp.Header.Get("Content-Type"))
+	t.Log(string(body))
+
+	if status := rep.Code; status != http.StatusOK {
+		t.Errorf("Wrong status")
+	}
+
+	data := []*imdb.IdmbFilm{}
+	json.Unmarshal([]byte(body), &data)
+	fmt.Printf("Films: %s", data)
+
+	if len(data) < 1 {
+		t.Error("Not found any film")
+	}
+
+	if len(data[0].Title) == 0 {
+		t.Error("Empty title")
+	}
+	if len(data[0].Image) == 0 {
+		t.Error("Empty image URL")
+	}
+	if len(data[0].Film) == 0 {
+		t.Error("Empty film URL")
+	}
+}
 
 func TestSearchBook(t *testing.T) {
 	router := httprouter.New()

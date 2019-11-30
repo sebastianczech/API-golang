@@ -11,9 +11,9 @@ func TestFindImdbFilmDlaNieznanegoTytulu(t *testing.T) {
 	}
 }
 
-// func TestFindImdbFilmDlaKonkretnegoTytulu(t *testing.T) {
-// 	films := FindImdbFilm("https://www.imdb.com/find?q=zasada%20przyjemnosc")
-// 	if len(films) != 1 {
-// 		t.Errorf("found %d films; wanted 1", len(films))
-// 	}
-// }
+func TestFindImdbFilmDlaKonkretnegoTytulu(t *testing.T) {
+	films := FindImdbFilm("https://www.imdb.com/find?q=millenium")
+	if len(films) < 1 {
+		t.Errorf("found %d films; wanted at least 1", len(films))
+	}
+}
