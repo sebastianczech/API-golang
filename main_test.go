@@ -48,7 +48,7 @@ func TestSearchFilm(t *testing.T) {
 	if len(data[0].Image) == 0 {
 		t.Error("Empty image URL")
 	}
-	if len(data[0].Film) == 0 {
+	if len(data[0].Website) == 0 {
 		t.Error("Empty film URL")
 	}
 }
@@ -90,7 +90,7 @@ func TestSearchBook(t *testing.T) {
 	if len(data[0].Image) == 0 {
 		t.Error("Empty image URL")
 	}
-	if len(data[0].Book) == 0 {
+	if len(data[0].Website) == 0 {
 		t.Error("Empty book URL")
 	}
 }

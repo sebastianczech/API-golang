@@ -19,7 +19,7 @@ func TestSzukajLubimyCzytacDlaKonkretnegoTytułu(t *testing.T) {
 	if len(books[0].Image) == 0 {
 		t.Error("Empty image URL")
 	}
-	if len(books[0].Book) == 0 {
+	if len(books[0].Website) == 0 {
 		t.Error("Empty book URL")
 	}
 }
