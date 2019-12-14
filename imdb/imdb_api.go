@@ -8,23 +8,23 @@ import (
 
 // IdmbFilm struktura danych do wykorzystania przez API
 type IdmbFilm struct {
-	Title string `json:"Title"`
-	Tv    string `json:"Tv"`
-	Image string `json:"Image"`
-	Film  string `json:"Film"`
+	Title   string `json:"Title"`
+	Tv      string `json:"Tv"`
+	Image   string `json:"Image"`
+	Website string `json:"Website"`
 }
 
 func newIdmbFilm() *IdmbFilm {
 	return &IdmbFilm{
-		Title: "",
-		Tv:    "",
-		Image: "",
-		Film:  "",
+		Title:   "",
+		Tv:      "",
+		Image:   "",
+		Website: "",
 	}
 }
 
 func (film IdmbFilm) String() string {
-	return fmt.Sprintf("tv: %s title: %s image: %s film: %s", film.Tv, film.Title, film.Image, film.Film)
+	return fmt.Sprintf("tv: %s title: %s image: %s film: %s", film.Tv, film.Title, film.Image, film.Website)
 }
 
 // FindImdbFilm API dla imdb.com do wyszukiwania filmow
@@ -42,7 +42,7 @@ func FindImdbFilm(url string) []*IdmbFilm {
 			fmt.Printf("Film link found: %s -> %s\n", e.ChildText("a[href]"), link)
 
 			film := newIdmbFilm()
-			film.Film = e.Request.AbsoluteURL(link)
+			film.Website = e.Request.AbsoluteURL(link)
 			film.Title = e.ChildText("a[href]")
 			films = append(films, film)
 
@@ -56,7 +56,7 @@ func FindImdbFilm(url string) []*IdmbFilm {
 	// 		fmt.Printf("Title found: %s\n", e.Text)
 
 	// 		for _, film := range films {
-	// 			if film.Film == e.Request.URL.String() {
+	// 			if film.Website == e.Request.URL.String() {
 	// 				film.Title = strings.TrimFunc(e.Text, func(r rune) bool {
 	// 					return !unicode.IsLetter(r) && !unicode.IsNumber(r)
 	// 				})
@@ -72,7 +72,7 @@ func FindImdbFilm(url string) []*IdmbFilm {
 			fmt.Printf("Image link found: %s -> %s\n", e.ChildText("img[src]"), link)
 
 			for _, film := range films {
-				if film.Film == e.Request.URL.String() {
+				if film.Website == e.Request.URL.String() {
 					film.Image = e.Request.AbsoluteURL(link)
 				}
 			}

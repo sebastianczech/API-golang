@@ -10,23 +10,23 @@ import (
 
 // LubimyCzytacBook struktura danych do wykorzystania przez API
 type LubimyCzytacBook struct {
-	Author string `json:"Author"`
-	Title  string `json:"Title"`
-	Image  string `json:"Image"`
-	Book   string `json:"Book"`
+	Author  string `json:"Author"`
+	Title   string `json:"Title"`
+	Image   string `json:"Image"`
+	Website string `json:"Website"`
 }
 
 func newLubimyCzytacBook() *LubimyCzytacBook {
 	return &LubimyCzytacBook{
-		Author: "",
-		Title:  "",
-		Image:  "",
-		Book:   "",
+		Author:  "",
+		Title:   "",
+		Image:   "",
+		Website: "",
 	}
 }
 
 func (book LubimyCzytacBook) String() string {
-	return fmt.Sprintf("author: %s title: %s image: %s book: %s", book.Author, book.Title, book.Image, book.Book)
+	return fmt.Sprintf("author: %s title: %s image: %s book: %s", book.Author, book.Title, book.Image, book.Website)
 }
 
 // SzukajLubimyCzytac API dla lubimyczytac.pl do wyszukiwania ksiazek
@@ -46,7 +46,7 @@ func SzukajLubimyCzytac(url string) []*LubimyCzytacBook {
 			book.Title = strings.TrimFunc(e.Text, func(r rune) bool {
 				return !unicode.IsLetter(r) && !unicode.IsNumber(r)
 			})
-			book.Book = e.Request.AbsoluteURL(link)
+			book.Website = e.Request.AbsoluteURL(link)
 			// fmt.Printf("Struct: %s\n", book)
 			books = append(books, book)
 
@@ -57,7 +57,7 @@ func SzukajLubimyCzytac(url string) []*LubimyCzytacBook {
 
 			for _, book := range books {
 				// fmt.Printf("Check %s with book %s\n", e.Request.URL.String(), book)
-				if book.Book == e.Request.URL.String() {
+				if book.Website == e.Request.URL.String() {
 					book.Author = strings.TrimFunc(e.Text, func(r rune) bool {
 						return !unicode.IsLetter(r) && !unicode.IsNumber(r)
 					})
@@ -71,7 +71,7 @@ func SzukajLubimyCzytac(url string) []*LubimyCzytacBook {
 		itemprop := e.Attr("class")
 		if itemprop == "img-fluid book-cover d-lg-none" {
 			for _, book := range books {
-				if book.Book == e.Request.URL.String() {
+				if book.Website == e.Request.URL.String() {
 					fmt.Printf("Image link found: %q -> %s\n", book.Title, e.Attr("src"))
 					book.Image = e.Attr("src")
 				}
