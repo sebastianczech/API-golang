@@ -35,6 +35,7 @@ func searchFilm(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	fmt.Printf("API /films/%s: %s\n", find, films)
 
 	w.Header().Set("Content-Type", "application/json")
+	w.Header().Set("Access-Control-Allow-Origin", "*")
 	json.NewEncoder(w).Encode(films)
 }
 
@@ -60,11 +61,13 @@ func searchBook(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	fmt.Printf("API /books/%s: %s\n", find, books)
 
 	w.Header().Set("Content-Type", "application/json")
+	w.Header().Set("Access-Control-Allow-Origin", "*")
 	json.NewEncoder(w).Encode(books)
 }
 
 func metricsLink(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	w.Header().Set("Content-Type", "application/json")
+	w.Header().Set("Access-Control-Allow-Origin", "*")
 	var mem runtime.MemStats
 	runtime.ReadMemStats(&mem)
 	b, _ := json.Marshal(mem)
@@ -73,6 +76,7 @@ func metricsLink(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 
 func homeLink(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	w.Header().Set("Content-Type", "application/json")
+	w.Header().Set("Access-Control-Allow-Origin", "*")
 	infoApi := info.NewInfoApi()
 	infoApi.Name = "API-golang"
 	infoApi.Version = "1.0.0"
