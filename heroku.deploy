@@ -1,0 +1,8 @@
+ln -s /Users/seba/Projects/go/api com.sebastianczech.api
+cd /Users/seba/go/src/com.sebastianczech.api
+
+go get -u github.com/tools/godep
+godep save ./...
+
+go get -u github.com/kardianos/govendor
+govendor init
