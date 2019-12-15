@@ -1,1 +1,0 @@
-# API for useful resources e.g. lubimyczytac.pl
