@@ -8,9 +8,9 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"com.sebastianczech.api/imdb"
-	"com.sebastianczech.api/lubimyczytac"
 	"github.com/julienschmidt/httprouter"
+	"github.com/sebastianczech/API-golang/imdb"
+	"github.com/sebastianczech/API-golang/lubimyczytac"
 )
 
 func TestSearchFilm(t *testing.T) {

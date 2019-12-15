@@ -8,10 +8,10 @@ import (
 	"net/url"
 	"runtime"
 
-	"com.sebastianczech.api/imdb"
-	"com.sebastianczech.api/info"
-	"com.sebastianczech.api/lubimyczytac"
 	"github.com/julienschmidt/httprouter"
+	"github.com/sebastianczech/API-golang/imdb"
+	"github.com/sebastianczech/API-golang/info"
+	"github.com/sebastianczech/API-golang/lubimyczytac"
 )
 
 func searchFilm(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {

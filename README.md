@@ -10,8 +10,9 @@ curl http://localhost:8080/films?find=millenium:%20m%C4%99%C5%BCczyzni | json_pp
 ## Prepare API to deploy on Heroku
 
 ```
-ln -s /Users/seba/Projects/go/api/src/ com.sebastianczech.api
-cd /Users/seba/go/src/com.sebastianczech.api
+mkdir /Users/seba/go/src/github.com/sebastianczech
+ln -s /Users/seba/Projects/go/api/src/ github.com/sebastianczech/API-golang
+cd /Users/seba/go/src/github.com/sebastianczech/API-golang
 
 go get -u github.com/tools/godep
 godep save ./...
