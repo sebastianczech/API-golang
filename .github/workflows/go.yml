@@ -24,8 +24,8 @@ jobs:
     #         dep ensure
     #     fi
 
-    - name: Build application
-      run: cd src && go build -v .
+    # - name: Build application
+      # run: cd src && go build -v .
 
     - name: Test library lubimyczytac with code coverage
       run: cd src && cd lubimyczytac && go test -v -cover
