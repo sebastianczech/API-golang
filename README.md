@@ -11,7 +11,7 @@ curl http://localhost:8080/films?find=millenium:%20m%C4%99%C5%BCczyzni | json_pp
 
 ```
 mkdir /Users/seba/go/src/github.com/sebastianczech
-ln -s /Users/seba/Projects/go/api/src/ github.com/sebastianczech/API-golang
+ln -s /Users/seba/Projects/go/api/ /Users/seba/go/src/github.com/sebastianczech/API-golang
 cd /Users/seba/go/src/github.com/sebastianczech/API-golang
 
 go get -u github.com/tools/godep
