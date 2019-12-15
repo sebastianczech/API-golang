@@ -8,9 +8,9 @@ import (
 	"net/url"
 	"runtime"
 
-	"./imdb"
-	"./info"
-	"./lubimyczytac"
+	"com.sebastianczech.api/src/imdb"
+	"com.sebastianczech.api/src/info"
+	"com.sebastianczech.api/src/lubimyczytac"
 	"github.com/julienschmidt/httprouter"
 )
 

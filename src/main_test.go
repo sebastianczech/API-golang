@@ -8,8 +8,8 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"./imdb"
-	"./lubimyczytac"
+	"com.sebastianczech.api/src/imdb"
+	"com.sebastianczech.api/src/lubimyczytac"
 	"github.com/julienschmidt/httprouter"
 )
 
