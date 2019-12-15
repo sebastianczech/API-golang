@@ -6,6 +6,7 @@ import (
 	"log"
 	"net/http"
 	"net/url"
+	"os"
 	"runtime"
 
 	"github.com/julienschmidt/httprouter"
@@ -83,11 +84,24 @@ func homeLink(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	fmt.Fprintf(w, string(b))
 }
 
+func determineListenAddress() (string, error) {
+	port := os.Getenv("PORT")
+	if port == "" {
+		return "", fmt.Errorf("$PORT not set")
+	}
+	return ":" + port, nil
+}
+
 func main() {
+	addr, err := determineListenAddress()
+	if err != nil {
+		log.Fatal(err)
+	}
+
 	router := httprouter.New()
 	router.GET("/", homeLink)
 	router.GET("/metrics", metricsLink)
 	router.GET("/books", searchBook)
 	router.GET("/films", searchFilm)
-	log.Fatal(http.ListenAndServe(":8080", router))
+	log.Fatal(http.ListenAndServe(addr, router))
 }
