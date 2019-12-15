@@ -25,14 +25,14 @@ jobs:
         fi
 
     - name: Build application
-      run: cd src && go build -v .
+      run: go build -v .
 
     - name: Test library lubimyczytac with code coverage
-      run: cd src && cd lubimyczytac && go test -v -cover
+      run: cd lubimyczytac && go test -v -cover
 
     - name: Test library imdb with code coverage
-      run: cd src && cd imdb && go test -v -cover
+      run: cd imdb && go test -v -cover
 
     - name: Test API with code coverage
-      run: cd src && go test -v -cover
+      run: go test -v -cover
       
