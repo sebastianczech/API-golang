@@ -1,5 +1,7 @@
 # API for useful resources e.g. lubimyczytac.pl, imdb.com
 
+[![BCH compliance](https://bettercodehub.com/edge/badge/sebastianczech/API-golang?branch=master)](https://bettercodehub.com/)
+
 ## Start API on local machine
 
 ```
