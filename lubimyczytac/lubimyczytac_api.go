@@ -73,10 +73,9 @@ func SzukajLubimyCzytac(url string) []*LubimyCzytacBook {
 		if strings.Contains(itemprop, "img-fluid") { // "book-cover d-lg-none"
 			// if itemprop == "img-fluid book-cover d-lg-none" {
 			for _, book := range books {
-				if book.Website == e.Request.URL.String() {
+				if book.Website == e.Request.URL.String() && len(book.Image) == 0 {
 					fmt.Printf("Image link found: %q -> %s\n", book.Title, e.Attr("src"))
 					book.Image = e.Attr("src")
-					break
 				}
 			}
 		}
