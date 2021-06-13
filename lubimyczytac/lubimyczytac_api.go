@@ -76,6 +76,7 @@ func SzukajLubimyCzytac(url string) []*LubimyCzytacBook {
 				if book.Website == e.Request.URL.String() {
 					fmt.Printf("Image link found: %q -> %s\n", book.Title, e.Attr("src"))
 					book.Image = e.Attr("src")
+					break
 				}
 			}
 		}
