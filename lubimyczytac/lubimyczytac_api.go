@@ -70,7 +70,7 @@ func SzukajLubimyCzytac(url string) []*LubimyCzytacBook {
 	c.OnHTML("img[class]", func(e *colly.HTMLElement) {
 		itemprop := e.Attr("class")
 		// fmt.Printf("Image check link: %s -> %s\n", e.Attr("src"), itemprop)
-		if strings.Contains(itemprop, "img-fluid book-cover d-lg-none") {
+		if strings.Contains(itemprop, "img-fluid") { // "book-cover d-lg-none"
 			// if itemprop == "img-fluid book-cover d-lg-none" {
 			for _, book := range books {
 				if book.Website == e.Request.URL.String() {
