@@ -1,4 +1,4 @@
-npassame: Go
+name: Go
 on: [push]
 jobs:
 
