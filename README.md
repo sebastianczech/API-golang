@@ -14,6 +14,7 @@ go get ./...
 
 go mod init github.com/sebastianczech/API-golang
 go mod tidy
+go mod vendor
 ```
 
 ## Start API on local machine

@@ -18,7 +18,6 @@ import (
 	"encoding/json"
 	"log"
 	"net/http"
-	"sync"
 	"time"
 )
 
@@ -29,7 +28,6 @@ type WebDebugger struct {
 	initialized     bool
 	CurrentRequests map[uint32]requestInfo
 	RequestLog      []requestInfo
-	sync.Mutex
 }
 
 type requestInfo struct {
@@ -63,9 +61,6 @@ func (w *WebDebugger) Init() error {
 
 // Event updates the debugger's status
 func (w *WebDebugger) Event(e *Event) {
-	w.Lock()
-	defer w.Unlock()
-
 	switch e.Type {
 	case "request":
 		w.CurrentRequests[e.RequestID] = requestInfo{
@@ -124,11 +119,11 @@ function fetchStatus() {
     $("#request_log_count").text('(' + data.RequestLog.length + ')');
     for(var i in data.CurrentRequests) {
       var r = data.CurrentRequests[i];
-      $("#current_requests").append(curRequestTpl(r.URL, r.Started, r.CollectorID));
+      $("#current_requests").append(curRequestTpl(r.Url, r.Started, r.CollectorId));
     }
     for(var i in data.RequestLog.reverse()) {
       var r = data.RequestLog[i];
-      $("#request_log").append(requestLogTpl(r.URL, r.Duration, r.CollectorID));
+      $("#request_log").append(requestLogTpl(r.Url, r.Duration, r.CollectorId));
     }
     setTimeout(fetchStatus, 1000);
   });
@@ -143,9 +138,7 @@ $(document).ready(function() {
 }
 
 func (w *WebDebugger) statusHandler(wr http.ResponseWriter, r *http.Request) {
-	w.Lock()
 	jsonData, err := json.MarshalIndent(w, "", "  ")
-	w.Unlock()
 	if err != nil {
 		panic(err)
 	}
