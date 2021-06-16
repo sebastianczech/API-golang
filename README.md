@@ -2,6 +2,17 @@
 
 [![BCH compliance](https://bettercodehub.com/edge/badge/sebastianczech/API-golang?branch=master)](https://bettercodehub.com/)
 
+
+## Prepare API
+
+```
+mkdir /Users/seba/go/src/github.com/sebastianczech
+ln -s /Users/seba/Projects/go/api/ /Users/seba/go/src/github.com/sebastianczech/API-golang
+
+cd /Users/seba/go/src/github.com/sebastianczech/API-golang
+go get ./...
+```
+
 ## Start API on local machine
 
 ```
@@ -32,15 +43,4 @@ curl http://localhost:8080/films?find=millenium:%20m%C4%99%C5%BCczyzni | json_pp
 "Website": "https://www.imdb.com/title/tt1132620/?ref_=fn_al_tt_1"
 }
 ]
-```
-
-## Prepare API to deploy on Heroku
-
-```
-mkdir /Users/seba/go/src/github.com/sebastianczech
-ln -s /Users/seba/Projects/go/api/ /Users/seba/go/src/github.com/sebastianczech/API-golang
-cd /Users/seba/go/src/github.com/sebastianczech/API-golang
-
-go get -u github.com/tools/godep
-godep save ./...
 ```
