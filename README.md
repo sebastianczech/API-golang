@@ -44,3 +44,65 @@ curl http://localhost:8080/films?find=millenium:%20m%C4%99%C5%BCczyzni | json_pp
 }
 ]
 ```
+
+# Useful go commands
+
+## Download package
+
+```bash
+go get github.com/julienschmidt/httprouter
+```
+
+## Install package
+
+```bash
+go install golang.org/x/tools/cmd/godoc
+```
+
+## Format source code
+
+```bash
+go fmt
+```
+
+## Verify source code
+
+```bash
+go vet
+```
+
+## Build program
+
+```bash
+go build
+go build -o api
+```
+
+## Clean binary
+
+```bash
+go clean
+```
+
+## Test code
+
+```bash
+go test
+go test -cover
+```
+
+## Generate documentation and share it via HTTP server
+
+```bash
+go install golang.org/x/tools/cmd/godoc
+godoc -http=:6060
+```
+
+## Use goimports for updating import lines
+
+Command ``goimports`` updates your Go import lines, adding missing ones and removing unreferenced ones.
+
+```bash
+go get golang.org/x/tools/cmd/goimports
+goimports -w .
+```
