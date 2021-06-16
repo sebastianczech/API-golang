@@ -3,7 +3,7 @@
 [![BCH compliance](https://bettercodehub.com/edge/badge/sebastianczech/API-golang?branch=master)](https://bettercodehub.com/)
 
 
-## Prepare API
+## Prepare API to run local and on Heroku
 
 ```
 mkdir /Users/seba/go/src/github.com/sebastianczech
@@ -11,6 +11,9 @@ ln -s /Users/seba/Projects/go/api/ /Users/seba/go/src/github.com/sebastianczech/
 
 cd /Users/seba/go/src/github.com/sebastianczech/API-golang
 go get ./...
+
+go mod init github.com/sebastianczech/API-golang
+go mod tidy
 ```
 
 ## Start API on local machine
